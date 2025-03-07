@@ -279,7 +279,7 @@ function buildFilter<T>(filters: Filter<T> = {}, aliases: Alias[] = [], propPref
                     result.push('(' + buildFilterCore(value[op], aliases, propName) + ')');
                   }
                 } else if (COLLECTION_OPERATORS.indexOf(op) !== -1) {
-                  const collectionClause = buildCollectionClause(filterKey.toLowerCase(), value[op], op, propName);
+                  const collectionClause = buildCollectionClause(filterKey, value[op], op, propName);
                   if (collectionClause) { result.push(collectionClause); }
                 } else if (op === 'has') {
                   result.push(`${propName} ${op} ${handleValue(value[op], aliases)}`);
@@ -459,7 +459,7 @@ function buildExpand<T>(expands: Expand<T>): string {
             default:
               value = buildExpand((expands as NestedExpandOptions<any>)[key] as Expand<T>);
           }
-          return `$${key.toLowerCase()}=${value}`;
+          return `$${key}=${value}`;
         })
         .join(';');
     } else {
